@@ -77,7 +77,7 @@ import org.springframework.util.Assert;
  * which are easier to set up - but less flexible, since you can just use standard
  * resource locations for XML bean definitions, rather than mixing arbitrary bean
  * definition formats. The equivalent in a web environment is
- * {@link org.springframework.web.context.support.XmlWebApplicationContext}.
+ * {link org.springframework.web.context.support.XmlWebApplicationContext}.
  *
  * <p>For custom application context implementations that are supposed to read
  * special bean definition formats in a refreshable manner, consider deriving
@@ -109,6 +109,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 	 * @see #refresh
 	 */
 	public GenericApplicationContext() {
+		logger.info("加载bean工厂,BeanFactory核心实现类");
 		this.beanFactory = new DefaultListableBeanFactory();
 	}
 

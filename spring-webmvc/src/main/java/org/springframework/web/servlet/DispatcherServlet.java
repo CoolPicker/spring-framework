@@ -149,6 +149,16 @@ import org.springframework.web.util.WebUtils;
  * 3.0+ environments, which support programmatic registration of servlet instances.
  * See the {@link #DispatcherServlet(WebApplicationContext)} javadoc for details.
  *
+ * DispatcherServlet:
+ * 	调度中心: 根据请求信息调用 HandlerMapping, 解析请求对应的Handler.
+ * 		解析到对应的Handler(即 *Controller)后, 开始由HandlerAdapter适配器处理.
+ * 		HandlerAdapter作为期望接口, 具体的适配器实现类用于对目标类进行适配,
+ * 		Controller作为需要适配的类.
+ * 	为什么Spring MVC中使用适配器模式?
+ * 		Spring MVC中的Controller种类众多, 不同类型的 Controller通过不同的方法来队请求进行处理.
+ * 		如果不利用适配器模式的话, DispatcherServlet需要直接获取对应类型的Controller, 然后自行判断.
+ * 		这种形式将使得程序难以维护, 违反了设计模式中的开闭原则 - 对扩展开放,对修改关闭.
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Rob Harrop

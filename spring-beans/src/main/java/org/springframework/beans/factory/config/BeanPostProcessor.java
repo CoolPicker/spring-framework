@@ -33,6 +33,21 @@ import org.springframework.lang.Nullable;
  * while post-processors that wrap beans with proxies will normally
  * implement {@link #postProcessAfterInitialization}.
  *
+ * 通过使用 BeanPostProcessor来 自定义bean
+ * 	该接口 提供回调接口 用以控制bean实例化逻辑/依赖解析逻辑
+ * 	配合 Ordered 接口实现 执行顺序控制
+ *
+ * BeanPostProcessor - Spring IoC容器实例化一个bean实例的时候调用 BeanPostProcessor
+ * 如果想要修改BeanDefinition的内容,需要实现 BeanFactoryPostProcessor
+ *
+ * Spring AOP的一种实现形式, 提供代理包装逻辑
+ *
+ * Spring Bean 后置 处理程序
+ *
+ * Spring bean 工厂方法 即 @Configuration + @Bean
+ *
+ * ConfigurableBeanFactory - addBeanPostProcessor
+ *
  * @author Juergen Hoeller
  * @since 10.10.2003
  * @see InstantiationAwareBeanPostProcessor
@@ -54,6 +69,8 @@ public interface BeanPostProcessor {
 	 * if {@code null}, no subsequent BeanPostProcessors will be invoked
 	 * @throws org.springframework.beans.BeansException in case of errors
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet
+	 *
+	 *
 	 */
 	@Nullable
 	default Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {

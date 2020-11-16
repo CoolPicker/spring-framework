@@ -92,6 +92,11 @@ final class PostProcessorRegistrationDelegate {
 			}
 			sortPostProcessors(currentRegistryProcessors, beanFactory);
 			registryProcessors.addAll(currentRegistryProcessors);
+			// 对应完成 2/3/4/5步,扫描/解析/put到map当中
+			// 没执行invokeBeanDefinitionRegistryPostProcessors之前
+			// beanDefinitionMap中只有6个对象
+			// 执行完成后,扫描多出三个,XYZ
+			// 执行后置处理器ConfigurationClassPostProcessor.processConfigBeanDefinitions完成bd的扫描 TODO 后续完善
 			invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
 			currentRegistryProcessors.clear();
 
@@ -127,6 +132,7 @@ final class PostProcessorRegistrationDelegate {
 			}
 
 			// Now, invoke the postProcessBeanFactory callback of all processors handled so far.
+			// 6. 再次执行 bean工厂后置处理器,完成cglib代理
 			invokeBeanFactoryPostProcessors(registryProcessors, beanFactory);
 			invokeBeanFactoryPostProcessors(regularPostProcessors, beanFactory);
 		}

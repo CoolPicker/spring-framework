@@ -234,16 +234,34 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * not for actual use
 	 * @return an instance of the bean
 	 * @throws BeansException if the bean could not be created
+	 * TODO 核心代码
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
 			@Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
 
+		// 对beanName做一个校验特殊字符串的功能
+		// transformedBeanName(name)中的name就是bean的名字
 		final String beanName = transformedBeanName(name);
+		// 定义了一个对象,用来存将来返回的bean
 		Object bean;
 
 		// Eagerly check singleton cache for manually registered singletons.
+		// deGetBean-1
+		// 检查一下单例池当中有没有手动注册的单例对象
+		// 即 spring在创建一个bean之前先检查一下beanName是否被手动注册过 到单例池当中
+		// 实际可举例 - ApplicationContext.getBeanFactory().registerSingleton(beanName,object)
+		// 目前看来主要是用于在spring初始化bean的时候判断bean是否在容器当中；以及供程序员直接get某个bean
+		// TODO 实现循环依赖的重要代码
 		Object sharedInstance = getSingleton(beanName);
+		// deGetBean-2
+		// sharedInstance != null 的两种情况
+		// 	1. 在spring初始化完成后程序员调用getBean(“x”)的时候得到的sharedInstance 就不等于null
+		// 	2. 循环依赖的时候第二次获取对象的时候这里也不等于空
+		//		比如X 依赖 Y；Y依赖X；spring做初始化第一次执行到这里的时候X 肯定等于null，
+		//		然后接着往下执行，当执行到属性注入Y的时候，Y也会执行到这里，那么Y也是null，
+		//		因为Y也没初始化，Y也会接着往下执行，当Y执行到属性注入的时候获取容器中获取X，
+		//		也就是第二次执行获取X；这个时候X则不为空
 		if (sharedInstance != null && args == null) {
 			if (logger.isTraceEnabled()) {
 				if (isSingletonCurrentlyInCreation(beanName)) {
@@ -260,10 +278,30 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		else {
 			// Fail if we're already creating this bean instance:
 			// We're assumably within a circular reference.
+			// deGetBean-3
+			// 判断当前初始化的bean是否 正在创建的原型集合 当中
+			/**
+			 * 因为不管单例还是原型，bean在创建的过程中会add到这个集合当中，
+			 * 但是创建完成之后就会从这个集合remove掉，
+			 * 原型情况第一次创建的时候会add到这个集合，但是不是在这里，而是在后面的创建过程中add，
+			 * 所以这里肯定不会存在，即使后面过程中add到这个集合了，但是创建完成之后也会remove掉，
+			 * 故而下一次实例化同一个原型bean（原型可以实例化无数次）的时候当代码执行到这里也不可能存在集合当中了；
+			 * 除非循环依赖会在bean还没有在这个集合remove之前再次判断一次，才有可能会存在，
+			 * 故而一般情况下这里都返回false；那么单例情况一定返回false，原型情况只有循环依赖才会成立，
+			 * 但是只要是正常人就不会对原型对象做循环依赖的；即使你用原型做了循环依赖这里也出抛异常
+			 * （因为if成立，进入分支 throw exception）。
+			 * 再一次说明原型不支持循环依赖（当然你非得用原型做循环依赖，其实有办法）
+			 *
+			 * 正在创建的原型集合:
+			 * 	与之对应的 --- 正在创建的单例集合
+			 * 	唯一的区别就是集合里面存的是单例和原型
+			 * 	故而统称正在创建的集合
+			 */
 			if (isPrototypeCurrentlyInCreation(beanName)) {
 				throw new BeanCurrentlyInCreationException(beanName);
 			}
 
+			// 各种验证
 			// Check if bean definition exists in this factory.
 			BeanFactory parentBeanFactory = getParentBeanFactory();
 			if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
@@ -294,6 +332,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
 				checkMergedBeanDefinition(mbd, beanName, args);
 
+				// 验证是否加了@DependsOn注解 是 - 当前bean的初始化 需要 另一个bean已完成初始化
+				// @DependsOn 可用于 控制 Spring Bean 的 启停顺序
 				// Guarantee initialization of beans that the current bean depends on.
 				String[] dependsOn = mbd.getDependsOn();
 				if (dependsOn != null) {
@@ -314,9 +354,13 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				}
 
 				// Create bean instance.
+				// deGetBean-4
 				if (mbd.isSingleton()) {
+					// 此处入参 beanName 和 singletonFactory
+					// getSingleton(beanName,singletonFactory) TODO 重点代码 初始化bean创建具体实现在createBean(beanName,mbd,args)
 					sharedInstance = getSingleton(beanName, () -> {
 						try {
+							// 开始创建对象
 							return createBean(beanName, mbd, args);
 						}
 						catch (BeansException ex) {

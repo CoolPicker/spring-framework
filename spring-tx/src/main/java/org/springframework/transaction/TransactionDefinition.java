@@ -37,6 +37,14 @@ import org.springframework.lang.Nullable;
  * at the resource level. In the latter case, the flag will only apply to managed
  * resources within the application, such as a Hibernate {@code Session}.
  *
+ * TransactionDefinition 定义一些基本的事务属性 - 类比 BeanDefinition
+ * 事务属性包括五个方面:
+ * 	隔离级别: getIsolationLevel() 默认DEFAULT
+ * 	传播行为: getPropagationBehavior() 默认REQUIRED
+ * 	回滚规则:
+ * 	是否只读: isReadOnly() 返回是否为只读事务，默认值为 false
+ * 	事务超时: getTimeout() 返回事务的超时时间，默认值为-1。如果超过该时间限制但事务还没有完成，则自动回滚事务。
+ *
  * @author Juergen Hoeller
  * @since 08.05.2003
  * @see PlatformTransactionManager#getTransaction(TransactionDefinition)
@@ -126,10 +134,10 @@ public interface TransactionDefinition {
 	 * analogous feature in EJB.
 	 * <p><b>NOTE:</b> Actual creation of a nested transaction will only work on
 	 * specific transaction managers. Out of the box, this only applies to the JDBC
-	 * {@link org.springframework.jdbc.datasource.DataSourceTransactionManager}
+	 * {link org.springframework.jdbc.datasource.DataSourceTransactionManager}
 	 * when working on a JDBC 3.0 driver. Some JTA providers might support
 	 * nested transactions as well.
-	 * @see org.springframework.jdbc.datasource.DataSourceTransactionManager
+	 * see org.springframework.jdbc.datasource.DataSourceTransactionManager
 	 */
 	int PROPAGATION_NESTED = 6;
 
@@ -231,6 +239,9 @@ public interface TransactionDefinition {
 	 * <p>Note that a transaction manager that does not support timeouts will throw
 	 * an exception when given any other timeout than {@link #TIMEOUT_DEFAULT}.
 	 * @return the transaction timeout
+	 * 事务超时, 指一个事务允许执行的最长时间,
+	 * 	如果超过该时间限制但事务还没有完成,则自动回滚事务.
+	 * 	默认为 -1
 	 */
 	int getTimeout();
 
@@ -249,6 +260,16 @@ public interface TransactionDefinition {
 	 * @return {@code true} if the transaction is to be optimized as read-only
 	 * @see org.springframework.transaction.support.TransactionSynchronization#beforeCommit(boolean)
 	 * @see org.springframework.transaction.support.TransactionSynchronizationManager#isCurrentTransactionReadOnly()
+	 * 对于只有读取数据查询的事务，可以指定事务类型为 readonly，即只读事务。
+	 * 只读事务不涉及数据的修改，数据库会提供一些优化手段，
+	 * 适合用在有多条数据库查询操作的方法中。
+	 *
+	 * 1. 如果一次执行单条查询语句,则没有必要启用事务支持,数据库默认支持SQL执行期间的读一致性
+	 * 2. 如果一次执行多条查询语句,例如统计查询,报表查询,
+	 * 	在这种场景下,多条查询SQL必须保证整体的读一致性,
+	 * 	否则,在前条SQL查询之后,后条SQL查询之前,数据被其他用户改变,
+	 * 	则该次整体的统计查询将会出现数据不一致的状态,
+	 * 	此时,应该启用事务支持
 	 */
 	boolean isReadOnly();
 

@@ -33,8 +33,8 @@ import org.springframework.lang.Nullable;
  * interface allows for exposing more fine-grained behavioral metadata.
  *
  * <p>This interface is heavily used within the framework itself, for example for
- * the AOP {@link org.springframework.aop.framework.ProxyFactoryBean} or the
- * {@link org.springframework.jndi.JndiObjectFactoryBean}. It can be used for
+ * the AOP {link org.springframework.aop.framework.ProxyFactoryBean} or the
+ * {link org.springframework.jndi.JndiObjectFactoryBean}. It can be used for
  * custom components as well; however, this is only common for infrastructure code.
  *
  * <p><b>{@code FactoryBean} is a programmatic contract. Implementations are not
@@ -48,13 +48,18 @@ import org.springframework.lang.Nullable;
  * synchronization other than for purposes of lazy initialization within the
  * FactoryBean itself (or the like).
  *
+ * FactoryBean - 可插入 Spring IoC容器的实例化逻辑的一个点.
+ * 	- Object getObject()		返回工厂所创建的对象实例, 本区分bean 原型模式/单例模式,判定该实例是否为共享(shared)
+ * 	- boolean isSingleton()		判定FactoryBean是否为单例
+ * 	- Class getObjectType()		返回创建对象实例的Class类型
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @since 08.03.2003
  * @param <T> the bean type
  * @see org.springframework.beans.factory.BeanFactory
- * @see org.springframework.aop.framework.ProxyFactoryBean
- * @see org.springframework.jndi.JndiObjectFactoryBean
+ * see org.springframework.aop.framework.ProxyFactoryBean
+ * see org.springframework.jndi.JndiObjectFactoryBean
  */
 public interface FactoryBean<T> {
 

@@ -94,6 +94,8 @@ import org.springframework.lang.Nullable;
  * <li>a custom destroy-method definition
  * </ol>
  *
+ * 使用 工厂模式 创建 Spring Bean
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Chris Beams
@@ -101,11 +103,11 @@ import org.springframework.lang.Nullable;
  * @see BeanNameAware#setBeanName
  * @see BeanClassLoaderAware#setBeanClassLoader
  * @see BeanFactoryAware#setBeanFactory
- * @see org.springframework.context.ResourceLoaderAware#setResourceLoader
- * @see org.springframework.context.ApplicationEventPublisherAware#setApplicationEventPublisher
- * @see org.springframework.context.MessageSourceAware#setMessageSource
- * @see org.springframework.context.ApplicationContextAware#setApplicationContext
- * @see org.springframework.web.context.ServletContextAware#setServletContext
+ * see org.springframework.context.ResourceLoaderAware#setResourceLoader
+ * see org.springframework.context.ApplicationEventPublisherAware#setApplicationEventPublisher
+ * see org.springframework.context.MessageSourceAware#setMessageSource
+ * see org.springframework.context.ApplicationContextAware#setApplicationContext
+ * see org.springframework.web.context.ServletContextAware#setServletContext
  * @see org.springframework.beans.factory.config.BeanPostProcessor#postProcessBeforeInitialization
  * @see InitializingBean#afterPropertiesSet
  * @see org.springframework.beans.factory.support.RootBeanDefinition#getInitMethodName

@@ -32,6 +32,27 @@ import org.springframework.aop.Advisor;
  * <p>There is no need for most Spring users to implement this interface;
  * do so only if you need to introduce more Advisor or Advice types to Spring.
  *
+ * 适配器模式:
+ * 	适配器模式(Adapter Pattern)将一个接口转换成客户希望的另一个接口,
+ * 	适配器模式使接口不兼容的那些类可以一起工作, 别名为 包装器(Wrapper)
+ *
+ * Spring AOP的实现是基于代理模式,
+ * 但是 Spring AOP的增强或通知(Advice)使用到了适配器模式,
+ * 与之相关的接口是 AdvisorAdapter.
+ *
+ * Advice 常用的类型有：
+ * 	BeforeAdvice 目标方法调用前,前置通知
+ *  AfterAdvice 目标方法调用后,后置通知
+ *	AfterReturningAdvice 目标方法执行结束后，return之前
+ *
+ *  每个类型Advice（通知）都有对应的拦截器:
+ *  	MethodBeforeAdviceInterceptor
+ *  	AfterReturningAdviceAdapter
+ *  	AfterReturningAdviceInterceptor
+ *  Spring预定义的通知要通过对应的适配器，
+ *  适配成 MethodInterceptor接口(方法拦截器)类型的对象
+ *  	（如：MethodBeforeAdviceInterceptor 负责适配 MethodBeforeAdvice）
+ *
  * @author Rod Johnson
  */
 public interface AdvisorAdapter {

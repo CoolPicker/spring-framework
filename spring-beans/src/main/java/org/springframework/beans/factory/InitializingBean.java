@@ -24,6 +24,9 @@ package org.springframework.beans.factory;
  * <p>An alternative to implementing {@code InitializingBean} is specifying a custom
  * init method, for example in an XML bean definition. For a list of all bean
  * lifecycle methods, see the {@link BeanFactory BeanFactory javadocs}.
+ * 控制Spring 生命周期 行为
+ * 	1. InitializingBean / DisposableBean
+ *  2. @PostConstruct / @DisposableBean
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

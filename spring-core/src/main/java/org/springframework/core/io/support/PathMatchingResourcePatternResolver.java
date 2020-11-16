@@ -337,6 +337,7 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
 		ClassLoader cl = getClassLoader();
 		Enumeration<URL> resourceUrls = (cl != null ? cl.getResources(path) : ClassLoader.getSystemResources(path));
 		while (resourceUrls.hasMoreElements()) {
+			// 得到系统路径
 			URL url = resourceUrls.nextElement();
 			result.add(convertClassLoaderURL(url));
 		}
@@ -489,6 +490,7 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
 	 * @see org.springframework.util.PathMatcher
 	 */
 	protected Resource[] findPathMatchingResources(String locationPattern) throws IOException {
+		// 根据项目路径 -- 系统路径 -- 获取声明为bean的class列表
 		String rootDirPath = determineRootDir(locationPattern);
 		String subPattern = locationPattern.substring(rootDirPath.length());
 		Resource[] rootDirResources = getResources(rootDirPath);

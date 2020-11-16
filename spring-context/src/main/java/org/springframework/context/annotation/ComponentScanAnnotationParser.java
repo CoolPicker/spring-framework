@@ -110,6 +110,7 @@ class ComponentScanAnnotationParser {
 		}
 
 		Set<String> basePackages = new LinkedHashSet<>();
+		// 获取@ComponentScan注解中声明的 basePackages 数组
 		String[] basePackagesArray = componentScan.getStringArray("basePackages");
 		for (String pkg : basePackagesArray) {
 			String[] tokenized = StringUtils.tokenizeToStringArray(this.environment.resolvePlaceholders(pkg),
@@ -129,6 +130,7 @@ class ComponentScanAnnotationParser {
 				return declaringClass.equals(className);
 			}
 		});
+		// 开始执行扫描, 获取 basePackages下声明为bean的class完整系统路径,用于后续的bean生命周期处理
 		return scanner.doScan(StringUtils.toStringArray(basePackages));
 	}
 

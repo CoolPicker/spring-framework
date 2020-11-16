@@ -29,6 +29,12 @@ import java.io.Flushable;
  * to savepoint management facilities. Note that savepoint management
  * is only available if supported by the underlying transaction manager.
  *
+ * TransactionStatus - 事务状态
+ * 	用来记录事务的状态, 该接口定义了一组方法,
+ * 	用来获取或判断事务的相应状态信息
+ * 	对应 PlatformTransactionManager.getTransaction(...)
+ *
+ *
  * @author Juergen Hoeller
  * @since 27.03.2003
  * @see #setRollbackOnly()
@@ -42,6 +48,7 @@ public interface TransactionStatus extends SavepointManager, Flushable {
 	 * Return whether the present transaction is new; otherwise participating
 	 * in an existing transaction, or potentially not running in an actual
 	 * transaction in the first place.
+	 * 是否是新的事务
 	 */
 	boolean isNewTransaction();
 
@@ -55,6 +62,7 @@ public interface TransactionStatus extends SavepointManager, Flushable {
 	 * @see #createSavepoint()
 	 * @see #rollbackToSavepoint(Object)
 	 * @see #releaseSavepoint(Object)
+	 * 是否有恢复点
 	 */
 	boolean hasSavepoint();
 
@@ -68,12 +76,14 @@ public interface TransactionStatus extends SavepointManager, Flushable {
 	 * where the actual commit/rollback decision is made by the container.
 	 * @see org.springframework.transaction.support.TransactionCallback#doInTransaction
 	 * @see org.springframework.transaction.interceptor.TransactionAttribute#rollbackOn
+	 * 设置为只回滚
 	 */
 	void setRollbackOnly();
 
 	/**
 	 * Return whether the transaction has been marked as rollback-only
 	 * (either by the application or by the transaction infrastructure).
+	 * 是否为只回滚
 	 */
 	boolean isRollbackOnly();
 
@@ -93,6 +103,7 @@ public interface TransactionStatus extends SavepointManager, Flushable {
 	 * whether it has already been committed or rolled back.
 	 * @see PlatformTransactionManager#commit
 	 * @see PlatformTransactionManager#rollback
+	 * 是否已完成
 	 */
 	boolean isCompleted();
 

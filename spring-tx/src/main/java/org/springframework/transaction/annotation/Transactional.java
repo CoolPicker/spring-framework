@@ -47,6 +47,19 @@ import org.springframework.transaction.TransactionDefinition;
  * <p>For specific information about the semantics of this annotation's attributes,
  * consult the {@link org.springframework.transaction.TransactionDefinition} and
  * {@link org.springframework.transaction.interceptor.TransactionAttribute} javadocs.
+ * 声明式事务
+ * 使用详解:
+ * 	1. 方法: 推荐将注解使用于方法上, 但要注意: 该注解只能应用到public方法上,否则不生效
+ * 	2. 类: 使用在类上, 表明该注解对该类中所有的public方法都生效
+ * 	3. 接口: 不推荐在接口上使用, 不完全可控,不够精细化控制
+ *
+ * 常用配置参数:
+ * 	propagation: 事务的传播行为,默认是 REQUIRED
+ * 	isolation: 事务的隔离级别, 默认为 DEFAULT, 日常使用MySQL,不需设置, 因为REPEATABLE_READ 可以达到SERIALIZABLE的效果
+ * 	timeout: 事务的超时时间,默认为 -1, 超时则自动回滚 注意单位 是秒
+ * 		超时 报错 TransactionException: transaction timeout expired
+ * 	readOnly: 指定事务是否为只读事务,默认为false
+ * 	rollbackFor: 用于指定能够触发事务回滚的异常类型，并且可以指定多个异常类型
  *
  * @author Colin Sampaleanu
  * @author Juergen Hoeller

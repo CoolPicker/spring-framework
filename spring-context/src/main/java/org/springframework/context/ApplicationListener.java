@@ -27,6 +27,12 @@ import java.util.EventListener;
  * that it is interested in. When registered with a Spring ApplicationContext, events
  * will be filtered accordingly, with the listener getting invoked for matching event
  * objects only.
+ * 观察者模式:
+ * Spring 事件驱动模型的三种角色
+ *
+ * 事件角色 --- ApplicationEvent
+ * 事件监听者角色 --- ApplicationListener
+ * 事件发布者角色 --- ApplicationEventPublisher
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

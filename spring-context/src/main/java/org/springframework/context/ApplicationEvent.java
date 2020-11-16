@@ -21,6 +21,18 @@ import java.util.EventObject;
 /**
  * Class to be extended by all application events. Abstract as it
  * doesn't make sense for generic events to be published directly.
+ * 观察者模式:
+ * Spring 事件驱动模型的三种角色
+ *
+ * 事件角色 --- ApplicationEvent
+ * 事件监听者角色 --- ApplicationListener
+ * 事件发布者角色 --- ApplicationEventPublisher
+ *
+ * ApplicationEvent -
+ * 	ContextStartedEvent: ApplicationContext 启动后触发
+ * 	ContextStoppedEvent: ApplicationContext 停止后触发
+ * 	ContextRefreshedEvent: ApplicationContext 初始化或刷新完成后触发
+ * 	ContextClosedEvent: ApplicationContext 关闭后触发
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

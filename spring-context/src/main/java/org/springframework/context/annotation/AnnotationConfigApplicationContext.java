@@ -84,7 +84,12 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
 		this();
+//		logger.info("Spring开始启动...");
+		// 关闭Spring对循环依赖的支持
+//		setAllowCircularReferences(false);
+//		logger.info("set allow circular references : false");
 		register(annotatedClasses);
+		// 调用 refresh 方法初始化Spring容器
 		refresh();
 	}
 

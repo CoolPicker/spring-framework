@@ -33,8 +33,15 @@ import org.springframework.lang.Nullable;
  *
  * <p>The default implementations of this strategy interface are
  * {@link org.springframework.transaction.jta.JtaTransactionManager} and
- * {@link org.springframework.jdbc.datasource.DataSourceTransactionManager},
+ * {link org.springframework.jdbc.datasource.DataSourceTransactionManager},
  * which can serve as an implementation guide for other transaction strategies.
+ * 事务管理接口
+ * 为什么要抽象出来 PlatformTransactionManager?
+ * 	主要是因为要将事务管理行为抽象出来,然后不同的平台去实现它,
+ * 	这样可以保证提供给外部的行为不变,方便扩展.
+ *
+ * 	接口 - 约定行为, 提供一系列功能列表的约定, 不提供功能,只定义行为.
+ *  	当需要为功能模块设计抽象行为时,就需要用到 接口
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -67,6 +74,7 @@ public interface PlatformTransactionManager {
 	 * @see TransactionDefinition#getIsolationLevel
 	 * @see TransactionDefinition#getTimeout
 	 * @see TransactionDefinition#isReadOnly
+	 * 获得事务
 	 */
 	TransactionStatus getTransaction(@Nullable TransactionDefinition definition) throws TransactionException;
 
@@ -96,6 +104,7 @@ public interface PlatformTransactionManager {
 	 * @throws IllegalTransactionStateException if the given transaction
 	 * is already completed (that is, committed or rolled back)
 	 * @see TransactionStatus#setRollbackOnly
+	 * 提交事务
 	 */
 	void commit(TransactionStatus status) throws TransactionException;
 
@@ -114,6 +123,7 @@ public interface PlatformTransactionManager {
 	 * (typically caused by fundamental resource failures)
 	 * @throws IllegalTransactionStateException if the given transaction
 	 * is already completed (that is, committed or rolled back)
+	 * 回滚事务
 	 */
 	void rollback(TransactionStatus status) throws TransactionException;
 

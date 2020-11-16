@@ -29,6 +29,8 @@ import org.springframework.lang.Nullable;
  * <p>This is just a minimal interface: The main intention is to allow a
  * {@link BeanFactoryPostProcessor} such as {@link PropertyPlaceholderConfigurer}
  * to introspect and modify property values and other bean metadata.
+ * BeanDefinition -> 描述一个bean实例,例如 属性值/构造函数参数值/具体实现相关的其它消息
+ *
  *
  * @author Juergen Hoeller
  * @author Rob Harrop

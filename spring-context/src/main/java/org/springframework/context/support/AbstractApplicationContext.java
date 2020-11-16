@@ -514,6 +514,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
+			// TODO 核心流程
+			logger.info("bean装载核心业务流程");
 			// Prepare this context for refreshing.
 			prepareRefresh();
 
@@ -527,15 +529,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// Allows post-processing of the bean factory in context subclasses.
 				postProcessBeanFactory(beanFactory);
 
+				// 1. 执行bean工厂后置处理器 完成扫描
+				// 2. 解析类成BeanDefinition对象,并且put到BeanDefinitionMap中
+				// 3. 再次执行bean工厂后置处理器完成cglib代理
 				// Invoke factory processors registered as beans in the context.
 				invokeBeanFactoryPostProcessors(beanFactory);
 
+				// 注册BeanPostProcessor
 				// Register bean processors that intercept bean creation.
 				registerBeanPostProcessors(beanFactory);
-
+				// 国际化
 				// Initialize message source for this context.
 				initMessageSource();
 
+				// 事件分发
 				// Initialize event multicaster for this context.
 				initApplicationEventMulticaster();
 
@@ -546,6 +553,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
+				// TODO 重要代码 Bean 实例化的核心代码
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
@@ -620,7 +628,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/**
 	 * <p>Replace any stub property sources with actual instances.
 	 * @see org.springframework.core.env.PropertySource.StubPropertySource
-	 * @see org.springframework.web.context.support.WebApplicationContextUtils#initServletPropertySources
+//	 * @see org.springframework.web.context.support.WebApplicationContextUtils#initServletPropertySources
 	 */
 	protected void initPropertySources() {
 		// For subclasses: do nothing by default.
@@ -845,6 +853,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/**
 	 * Finish the initialization of this context's bean factory,
 	 * initializing all remaining singleton beans.
+	 *
+	 * BeanFactory的一些初始化工作,不需要关心
+	 * 直接看 preInstantiateSingletons()
 	 */
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// Initialize conversion service for this context.

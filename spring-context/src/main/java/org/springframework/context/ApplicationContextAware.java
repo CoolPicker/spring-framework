@@ -47,6 +47,18 @@ import org.springframework.beans.factory.Aware;
  * <p>For a list of all bean lifecycle methods, see the
  * {@link org.springframework.beans.factory.BeanFactory BeanFactory javadocs}.
  *
+ * 实现该接口的实例, 将获取到ApplicationContext的引用类型.
+ * 可以检索到其它的beans, 进而操作 应用上下文, 但违反了控制反转风格.
+ * -> @Autowired
+ *
+ * 注意: 使用 Aware 接口绑定代码 到 SpringBean API, 没有沿用 控制反转风格.
+ * 	一般适用于 需要对容器进行编程访问的基础服务 采用这种方式
+ * 	例如 Nacos,JPA,MyBatis 等框架
+ *
+ * Spring Bean 生成过程中 ,会回调 BeanNameAware/ApplicationContextAware中的方法
+ *
+ * 声明 得到 ApplicationContext
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Chris Beams

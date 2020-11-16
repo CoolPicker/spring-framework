@@ -63,7 +63,7 @@ configure(allprojects) { project ->
 	apply plugin: "propdeps"
 	apply plugin: "test-source-set-dependencies"
 	apply plugin: "io.spring.dependency-management"
-	apply from: "${gradleScriptDir}/ide.gradle"
+//	apply from: "${gradleScriptDir}/ide.gradle"
 
 	dependencyManagement {
 		resolutionStrategy {
@@ -80,7 +80,7 @@ configure(allprojects) { project ->
 		resolutionStrategy.cacheChangingModulesFor 0, "seconds"
 
 		// Consistent slf4j version (e.g. clashes between slf4j versions)
-		resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		resolutionStrategy.eachDependency { details ->
 			if (details.requested.group == "org.slf4j") {
 				details.useVersion slf4jVersion
 			}
@@ -284,9 +284,9 @@ configure(rootProject) {
 	}
 
 	artifacts {
-		archives docsZip
-		archives schemaZip
-		archives distZip
+//		archives docsZip
+//		archives schemaZip
+//		archives distZip
 	}
 
 	wrapper {

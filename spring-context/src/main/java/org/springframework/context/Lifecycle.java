@@ -39,13 +39,14 @@ package org.springframework.context;
  * interface will remain undetected and hence ignored. Also, note that the extended
  * {@link SmartLifecycle} interface provides sophisticated integration with the
  * application context's startup and shutdown phases.
+ * Spring Bean 生命周期控制 通用接口
  *
  * @author Juergen Hoeller
  * @since 2.0
  * @see SmartLifecycle
  * @see ConfigurableApplicationContext
- * @see org.springframework.jms.listener.AbstractMessageListenerContainer
- * @see org.springframework.scheduling.quartz.SchedulerFactoryBean
+ * see org.springframework.jms.listener.AbstractMessageListenerContainer
+ * see org.springframework.scheduling.quartz.SchedulerFactoryBean
  */
 public interface Lifecycle {
 

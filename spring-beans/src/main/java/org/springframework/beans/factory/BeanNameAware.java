@@ -25,6 +25,11 @@ package org.springframework.beans.factory;
  *
  * <p>For a list of all bean lifecycle methods, see the
  * {@link BeanFactory BeanFactory javadocs}.
+ * Spring Bean 生成过程中 ,会回调 BeanNameAware/ApplicationContextAware中的方法,
+ * 此处用以设置 bean name,默认驼峰命名
+ * Aware -> 属性注入 SpringBean
+ *
+ * 声明得到 Bean Name
  *
  * @author Juergen Hoeller
  * @author Chris Beams

@@ -52,6 +52,7 @@ package org.springframework.context;
  * {@code SmartLifecycle} bean instance will usually get initialized on startup
  * of the application context in any case. As a consequence, the bean definition
  * lazy-init flag has very limited actual effect on {@code SmartLifecycle} beans.
+ * SpringBean生命周期控制 细粒度管控 实现接入点
  *
  * @author Mark Fisher
  * @author Juergen Hoeller
@@ -68,7 +69,7 @@ public interface SmartLifecycle extends Lifecycle, Phased {
 	 * {@code SmartLifecycle} beans into a separate later shutdown phase.
 	 * @since 5.1
 	 * @see #getPhase()
-	 * @see org.springframework.context.support.DefaultLifecycleProcessor#getPhase(Lifecycle)
+	 * see org.springframework.context.support.DefaultLifecycleProcessor#getPhase(Lifecycle)
 	 */
 	int DEFAULT_PHASE = Integer.MAX_VALUE;
 
@@ -119,7 +120,10 @@ public interface SmartLifecycle extends Lifecycle, Phased {
 	 * @see #isAutoStartup()
 	 * @see #start()
 	 * @see #stop(Runnable)
-	 * @see org.springframework.context.support.DefaultLifecycleProcessor#getPhase(Lifecycle)
+	 * see org.springframework.context.support.DefaultLifecycleProcessor#getPhase(Lifecycle)
+	 * 获取SpringBean生命周期函数执行相位
+	 * Integer.MIN_VALUE 开始最早,结束最晚
+	 * Integer.MAX_VALUE 开始最晚,结束最早 - 很可能因为该Bean依赖于其它程序来运行
 	 */
 	@Override
 	default int getPhase() {

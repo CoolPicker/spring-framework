@@ -37,6 +37,11 @@ import org.springframework.beans.BeansException;
  * If bean instance interaction is required, consider implementing
  * {@link BeanPostProcessor} instead.
  *
+ * BeanFactoryPostProcessor VS BeanPostProcessor
+ * BeanDefinition - Bean instantiation
+ * 操作Bean配置元数据	 对spring Bean的实例化 自定义操作
+ *
+ *
  * @author Juergen Hoeller
  * @since 06.07.2003
  * @see BeanPostProcessor
