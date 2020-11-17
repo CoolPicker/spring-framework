@@ -26,6 +26,10 @@ import java.lang.annotation.Target;
  * Indicates that an annotated class is a "component".
  * Such classes are considered as candidates for auto-detection
  * when using annotation-based configuration and classpath scanning.
+ * 	对比: @Component vs @Bean
+ * 		1. 作用对象不同: @Component 作用于类, @Bean作用于方法
+ * 		2. 	@Component 通过@ComponentScan扫描并装配到Spring容器, @Bean 目标方法返回实例对象
+ * 		3. @Bean相较于@Component可操作性更强, 很多地方只能通过@Bean来注册bean, 比如引用第三方库中的类装配到Spring容器
  *
  * @author Mark Fisher
  * @since 2.5

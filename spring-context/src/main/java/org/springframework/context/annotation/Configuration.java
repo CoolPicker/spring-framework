@@ -48,7 +48,7 @@ import org.springframework.stereotype.Component;
  *
  * <p>{@code @Configuration} classes are typically bootstrapped using either
  * {@link AnnotationConfigApplicationContext} or its web-capable variant,
- * {@link org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+ * {link org.springframework.web.context.support.AnnotationConfigWebApplicationContext
  * AnnotationConfigWebApplicationContext}. A simple example with the former follows:
  *
  * <pre class="code">
@@ -60,7 +60,7 @@ import org.springframework.stereotype.Component;
  * </pre>
  *
  * <p>See the {@link AnnotationConfigApplicationContext} javadocs for further details, and see
- * {@link org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+ * {link org.springframework.web.context.support.AnnotationConfigWebApplicationContext
  * AnnotationConfigWebApplicationContext} for web configuration instructions in a
  * {@code Servlet} container.
  *
@@ -381,9 +381,9 @@ import org.springframework.stereotype.Component;
  * annotations. See
  * {@link org.springframework.scheduling.annotation.EnableAsync @EnableAsync},
  * {@link org.springframework.scheduling.annotation.EnableScheduling @EnableScheduling},
- * {@link org.springframework.transaction.annotation.EnableTransactionManagement @EnableTransactionManagement},
- * {@link org.springframework.context.annotation.EnableAspectJAutoProxy @EnableAspectJAutoProxy},
- * and {@link org.springframework.web.servlet.config.annotation.EnableWebMvc @EnableWebMvc}
+ * {link org.springframework.transaction.annotation.EnableTransactionManagement @EnableTransactionManagement},
+ * {link org.springframework.context.annotation.EnableAspectJAutoProxy @EnableAspectJAutoProxy},
+ * and {link org.springframework.web.servlet.config.annotation.EnableWebMvc @EnableWebMvc}
  * for details.
  *
  * <h2>Constraints when authoring {@code @Configuration} classes</h2>
@@ -399,6 +399,8 @@ import org.springframework.stereotype.Component;
  * annotations remaining undetected).
  * </ul>
  *
+ * Configuration - 声明配置类, 可以使用 @Component替代, 但使用 @Configuration注解声明配置类更加语义化.
+ *
  * @author Rod Johnson
  * @author Chris Beams
  * @since 3.0
@@ -412,7 +414,7 @@ import org.springframework.stereotype.Component;
  * @see AnnotationConfigApplicationContext
  * @see ConfigurationClassPostProcessor
  * @see org.springframework.core.env.Environment
- * @see org.springframework.test.context.ContextConfiguration
+ * see org.springframework.test.context.ContextConfiguration
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

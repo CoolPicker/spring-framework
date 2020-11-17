@@ -60,6 +60,16 @@ import org.springframework.util.StringUtils;
  * {@link AbstractBeanFactory} and {@link DefaultListableBeanFactory}
  * (which inherit from it). Can alternatively also be used as a nested
  * helper to delegate to.
+ * IoC 是一种设计思想, 就是 将原本在程序中手动创建对象的控制权, 交由Spring框架来管理.
+ * IoC容器是Spring用来实现IoC的载体, 实质就是个Map- DefaultSingletonBeanRegistry 下的 singletonObjects.
+ * 将对象之间的相互依赖关系交给IoC容器来管理, 并由IoC容器完成对象的注入.
+ * Configuration Metadata-配置元数据
+ * IoC容器创建Spring Bean使用工厂模式, 当需要创建一个对象的时候,只需要配置好相关注解即可, 不用考虑对象的创建过程.
+ *
+ * Spring中单例bean的线程安全问题,
+ * 	原因: 单例对象的非静态成员变量的写操作 存在线程安全问题.
+ * 	解决: 1. Spring Bean对象中避免定义可变的成员变量.
+ * 		  2. 在类中定义一个 ThreadLocal成员变量, 将需要的可变成员变量保存在 ThreadLocal中.
  *
  * @author Juergen Hoeller
  * @since 2.0
@@ -71,7 +81,7 @@ import org.springframework.util.StringUtils;
 public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements SingletonBeanRegistry {
 
 	/** Cache of singleton objects: bean name to bean instance. */
-	// 单例池, 缓存了一般情况下Spring应用中的单例bean
+	// TODO 单例池, 缓存了一般情况下Spring应用中的单例bean
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
 	/** Cache of singleton factories: bean name to ObjectFactory. */

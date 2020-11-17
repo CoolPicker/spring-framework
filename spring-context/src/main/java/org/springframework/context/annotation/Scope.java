@@ -51,6 +51,16 @@ import org.springframework.core.annotation.AliasFor;
  * {@link org.springframework.beans.factory.config.CustomScopeConfigurer
  * CustomScopeConfigurer}.
  *
+ * 声明 Spring Bean的作用域
+ * 	eg: @Bean
+ *  1   @Scope("singleton")
+ *  2	... ...
+ *	作用域:
+ *		singleton: 唯一 bean 实例, 默认 单例模式
+ *		prototype: 每次请求都会创建一个新的bean实例 原型模式
+ *		request: 每次HTTP请求创建bean, 该bean仅在当前http request内有效
+ *		session: http session内有效
+ *
  * @author Mark Fisher
  * @author Chris Beams
  * @author Sam Brannen
@@ -77,8 +87,8 @@ public @interface Scope {
 	 * @since 4.2
 	 * @see ConfigurableBeanFactory#SCOPE_PROTOTYPE
 	 * @see ConfigurableBeanFactory#SCOPE_SINGLETON
-	 * @see org.springframework.web.context.WebApplicationContext#SCOPE_REQUEST
-	 * @see org.springframework.web.context.WebApplicationContext#SCOPE_SESSION
+	 * see org.springframework.web.context.WebApplicationContext#SCOPE_REQUEST
+	 * see org.springframework.web.context.WebApplicationContext#SCOPE_SESSION
 	 * @see #value
 	 */
 	@AliasFor("value")

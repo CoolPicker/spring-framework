@@ -38,6 +38,9 @@ import org.springframework.stereotype.Controller;
  * {@code RequestMappingHandlerMapping}-{@code RequestMappingHandlerAdapter}
  * pair which are the default in the MVC Java config and the MVC namespace.
  *
+ * RestController == Controller + ResponseBody
+ * 返回JSON或XML形式数据
+ *
  * @author Rossen Stoyanchev
  * @author Sam Brannen
  * @since 4.0

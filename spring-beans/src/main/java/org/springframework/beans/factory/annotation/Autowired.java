@@ -69,6 +69,10 @@ import java.lang.annotation.Target;
  * types. Please consult the javadoc for the {@link AutowiredAnnotationBeanPostProcessor}
  * class (which, by default, checks for the presence of this annotation).
  *
+ * 自动导入对象到勒种, 被注入的类同样要被Spring容器管理. 注意: 目标组件必须被声明, 否则 报错 'no type match found'
+ *
+ * Factory Method - @Bean
+ *
  * @author Juergen Hoeller
  * @author Mark Fisher
  * @since 2.5
